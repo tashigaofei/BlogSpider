@@ -6,7 +6,6 @@ from scrapy import log, signals
 from tutorial.spiders.BlogSpider import BlogSpider
 from scrapy.utils.project import get_project_settings
 
-
 spider = BlogSpider(domain='cnblogs.com')
 settings = get_project_settings()
 crawler = Crawler(settings)

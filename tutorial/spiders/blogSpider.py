@@ -1,41 +1,36 @@
 __author__ = 'tashigaofei'
-from scrapy.spider import BaseSpider
+from scrapy.spider import Spider
 from scrapy.selector import Selector
 from tutorial.items import BlogItem
+from scrapy.http import request
+from scrapy.contrib.linkextractors.sgml import  SgmlLinkExtractor
+from scrapy.contrib.spiders import  Rule, CrawlSpider
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
-class BlogSpider(BaseSpider):
+class BlogSpider(CrawlSpider):
     name = 'BlogSpider'
     allowed_domains = ["cnblogs.com"]
     start_urls = [
-        "http://news.cnblogs.com/n/197616/"
+        "http://news.cnblogs.com/n/197811/"
     ]
 
-    def parse(self, response):
-        filename = response.url.split("/")[-2]
-        open(filename, 'wb').write(response.body)
+    rules = (
+        Rule(
+            SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/\d+/'),
+                              # restrict_xpaths =('//div[@class="prevnext_block"]/a[2]/@href',)
+            ),
+            callback='parseBlog'),
+    )
 
-
-    # def parse(self, response):
-    # hxs = HtmlXPathSelector(response)
-    # sites = hxs.select('//fieldset/ul/li')
-    # #sites = hxs.select('//ul/li')
-    # for site in sites:
-    # title = site.select('a/text()').extract()
-    # link = site.select('a/@href').extract()
-    # desc = site.select('text()').extract()
-    # #print title, link, desc
-    # print title, link
-    # #print title
-
-
-    # def parse(self, response):
-    #     hxs = Selector(response)
-    #     sites = hxs.xpath('//div[@id="news_content"]')
-    #     # open(filename, 'wb').write(response.body)
-    #     items = []
-    #     for site in sites:
-    #         item = DmozItem()
-    #         item['content'] = site.extract()
-    #         items.append(item)
-    #     return items
+    def parseBlog(self, response):
+        hxs = Selector(response)
+        site = hxs.xpath('//div[@id="news_content"]').extract();
+        title = hxs.xpath('//div[@id="news_title"]/a/text()').extract();
+        item = BlogItem();
+        item['title'] = title[0];
+        # item['content'] = site[0];
+        return item
