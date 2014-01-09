@@ -14,6 +14,7 @@ NEWSPIDER_MODULE = 'tutorial.spiders'
 ITEM_PIPELINES = {'tutorial.pipelines.BlogPipeline': 0 }
 # FEED_URI = os.path.dirname(os.path.realpath(__file__)) + '/data';
 # FEED_FORMAT = 'jsonlines'
+# DOWNLOAD_DELAY = 0.25
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'tutorial (+http://www.yourdomain.com)'

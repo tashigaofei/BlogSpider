@@ -15,7 +15,7 @@ class BlogSpider(CrawlSpider):
     name = 'BlogSpider'
     allowed_domains = ["cnblogs.com"]
     start_urls = [
-        "http://news.cnblogs.com/n/197811/"
+        "http://news.cnblogs.com/n/197798/"
     ]
 
     rules = (
@@ -32,5 +32,5 @@ class BlogSpider(CrawlSpider):
         title = hxs.xpath('//div[@id="news_title"]/a/text()').extract();
         item = BlogItem();
         item['title'] = title[0];
-        # item['content'] = site[0];
+        item['content'] = site[0];
         return item

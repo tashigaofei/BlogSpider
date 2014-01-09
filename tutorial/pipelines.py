@@ -5,12 +5,11 @@
 
 import  json
 import  os
-import  codecs
 
 class BlogPipeline(object):
 
     def __init__(self):
-        self.file = codecs.open(os.path.realpath(__file__)+'data', 'w', 'utf-8');
+        self.file = open(os.path.dirname(os.path.realpath(__file__)) +'/data', 'wb');
 
     def process_item(self, item, spider):
         line = json.dumps(dict(item), ensure_ascii=False) + "\n";
