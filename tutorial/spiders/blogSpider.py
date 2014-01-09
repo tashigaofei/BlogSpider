@@ -1,19 +1,19 @@
 __author__ = 'tashigaofei'
 from scrapy.spider import BaseSpider
 from scrapy.selector import Selector
-from tutorial.items import DmozItem
+from tutorial.items import BlogItem
 
 
-class DmozSpider(BaseSpider):
-    name = 'DmozSpider'
+class BlogSpider(BaseSpider):
+    name = 'BlogSpider'
     allowed_domains = ["cnblogs.com"]
     start_urls = [
         "http://news.cnblogs.com/n/197616/"
     ]
 
-    # def parse(self, response):
-    #     filename = response.url.split("/")[-2]
-    #     open(filename, 'wb').write(response.body)
+    def parse(self, response):
+        filename = response.url.split("/")[-2]
+        open(filename, 'wb').write(response.body)
 
 
     # def parse(self, response):
@@ -29,13 +29,13 @@ class DmozSpider(BaseSpider):
     # #print title
 
 
-    def parse(self, response):
-        hxs = Selector(response)
-        sites = hxs.xpath('//div[@id="news_content"]')
-        # open(filename, 'wb').write(response.body)
-        items = []
-        for site in sites:
-            item = DmozItem()
-            item['content'] = site.extract()
-            items.append(item)
-        return items
+    # def parse(self, response):
+    #     hxs = Selector(response)
+    #     sites = hxs.xpath('//div[@id="news_content"]')
+    #     # open(filename, 'wb').write(response.body)
+    #     items = []
+    #     for site in sites:
+    #         item = DmozItem()
+    #         item['content'] = site.extract()
+    #         items.append(item)
+    #     return items
