@@ -13,6 +13,7 @@ class BlogPipeline(object):
 
     def process_item(self, item, spider):
         line = json.dumps(dict(item), ensure_ascii=False) + "\n";
+        # line = repr(dict(item)).decode("unicode-escape") + '\n';
         self.file.write(line);
 
         return item

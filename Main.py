@@ -5,6 +5,10 @@ from scrapy.crawler import Crawler
 from scrapy import log, signals
 from tutorial.spiders.BlogSpider import BlogSpider
 from scrapy.utils.project import get_project_settings
+import os
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 spider = BlogSpider(domain='cnblogs.com')
 settings = get_project_settings()
@@ -13,5 +17,6 @@ crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
 crawler.configure()
 crawler.crawl(spider)
 crawler.start()
-log.start()
+log.start(loglevel = 'DEBUG', logstdout=True);
+# log.start(logfile = os.path.dirname(os.path.realpath(__file__))+'logfile', loglevel = 'DEBUG');
 reactor.run() # the script will block here until the spider_closed signal was sent
