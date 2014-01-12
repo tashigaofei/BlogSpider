@@ -12,22 +12,23 @@ class BlogSpider(CrawlSpider):
     start_urls = [
         "http://news.cnblogs.com/"
     ]
+    # download_delay = 0.010;
 
-    rules = (
-        Rule(
-            SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/\d+/'),
-                              restrict_xpaths =('//div[@id="news_list"]',)
-            ),
-            callback='parseBlog',
-            follow=False ),
-     # Rule(
-     #        SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/page/\d{,1}/'),
-     #                          restrict_xpaths =('//div[@id="pages"]',)
-     #        ),
-     #        callback='parseBlog',
-     #        follow=True),
-    )
-    def parseBlog(self, response):
+    # rules = (
+    #     Rule(
+    #         SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/\d+/'),
+    #                           restrict_xpaths =('//div[@id="news_list"]',)
+    #         ),
+    #         callback='parseBlog',
+    #         follow=False ),
+    #  # Rule(
+    #  #        SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/page/\d{,1}/'),
+    #  #                          restrict_xpaths =('//div[@id="pages"]',)
+    #  #        ),
+    #  #        callback='parseBlog',
+    #  #        follow=True),
+    # )
+    def parse(self, response):
         hxs = Selector(response)
         self.log(response.url)
 

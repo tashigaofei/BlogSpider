@@ -12,6 +12,7 @@ BOT_NAME = 'tutorial'
 SPIDER_MODULES = ['tutorial.spiders']
 NEWSPIDER_MODULE = 'tutorial.spiders'
 ITEM_PIPELINES = {'tutorial.pipelines.BlogPipeline': 0 }
+COOKIES_ENABLED = False;
 # LOG_STDOUT = True
 # LOG_FILE = os.path.dirname(os.path.realpath(__file__))+'/logfile'
 # LOG_ENABLE = True
