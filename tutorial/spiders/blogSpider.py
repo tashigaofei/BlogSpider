@@ -2,9 +2,10 @@ __author__ = 'tashigaofei'
 from scrapy.spider import Spider
 from scrapy.selector import Selector
 from tutorial.items import BlogItem
-from scrapy.http import request ,response
+from scrapy.http import Request ,Response
 from scrapy.contrib.linkextractors.sgml import  SgmlLinkExtractor
 from scrapy.contrib.spiders import  Rule, CrawlSpider
+import urlparse
 
 class BlogSpider(CrawlSpider):
     name = 'BlogSpider'
@@ -12,26 +13,22 @@ class BlogSpider(CrawlSpider):
     start_urls = [
         "http://news.cnblogs.com/"
     ]
-    # download_delay = 0.010;
 
-    # rules = (
-    #     Rule(
-    #         SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/\d+/'),
-    #                           restrict_xpaths =('//div[@id="news_list"]',)
-    #         ),
-    #         callback='parseBlog',
-    #         follow=False ),
-    #  # Rule(
-    #  #        SgmlLinkExtractor(allow=('http://news.cnblogs.com/n/page/\d{,1}/'),
-    #  #                          restrict_xpaths =('//div[@id="pages"]',)
-    #  #        ),
-    #  #        callback='parseBlog',
-    #  #        follow=True),
-    # )
     def parse(self, response):
         hxs = Selector(response)
         self.log(response.url)
 
+        for item in hxs.xpath('//div[@id="news_list"]').re('/n/\d+/'):
+            urlString = urlparse.urljoin(response.url, item);
+            yield Request(url =urlString, callback = self.blogParse)
+
+        for item in hxs.xpath('//div[@id="pages"]').re('/n/page/\d{,1}/'):
+            urlString = urlparse.urljoin(response.url, item);
+            yield Request(url =urlString, callback = self.parse)
+
+
+    def blogParse(self, response):
+        hxs = Selector(response)
         # site = hxs.xpath('//div[@id="news_content"]').extract();
         title = hxs.xpath('//div[@id="news_title"]/a/text()').extract();
         if title.__len__() > 0:
