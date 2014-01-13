@@ -1,10 +1,15 @@
-# Define your item pipelines here
+# Define here the models for your scraped items
 #
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+# See documentation in:
+# http://doc.scrapy.org/en/latest/topics/items.html
 
 import  json
 import  os
+from scrapy.item import Item, Field
+
+class BlogItem(Item):
+    title = Field();
+    content = Field();
 
 class BlogPipeline(object):
 

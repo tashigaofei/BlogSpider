@@ -4,13 +4,15 @@ from twisted.internet import reactor
 from scrapy.crawler import Crawler
 from scrapy import log, signals
 from tutorial.spiders.blogSpider import BlogSpider
+from tutorial.spiders.dongwuSpider import DongwuSpider
 from scrapy.utils.project import get_project_settings
 import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-spider = BlogSpider(domain='cnblogs.com')
+# spider = BlogSpider(domain='cnblogs.com')
+spider = DongwuSpider()
 settings = get_project_settings()
 crawler = Crawler(settings)
 crawler.signals.connect(reactor.stop, signal=signals.spider_closed)

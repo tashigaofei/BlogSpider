@@ -1,7 +1,7 @@
 __author__ = 'tashigaofei'
 from scrapy.spider import Spider
 from scrapy.selector import Selector
-from tutorial.items import BlogItem
+from tutorial.blogItem import BlogItem
 from scrapy.http import Request ,Response
 from scrapy.contrib.linkextractors.sgml import  SgmlLinkExtractor
 from scrapy.contrib.spiders import  Rule, CrawlSpider
